@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
 
 namespace Parcial2_LondonoValenciaSebastian.DAL.Entities
@@ -6,7 +7,7 @@ namespace Parcial2_LondonoValenciaSebastian.DAL.Entities
     public class Entity
     {
         [Key]
-        public virtual int Id { get; set; }
+        public virtual Guid Id { get; set; }
 
         [Display(Name = "Fecha de creación")]
         public virtual DateTime? CreatedDate { get; set; }

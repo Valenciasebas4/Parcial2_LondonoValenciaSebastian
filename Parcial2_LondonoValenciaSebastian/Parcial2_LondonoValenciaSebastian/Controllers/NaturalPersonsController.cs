@@ -28,7 +28,7 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
         }
 
         // GET: NaturalPersons/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.NaturalsPersons == null)
             {
@@ -51,7 +51,6 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
             return View();
         }
 
-
         private int CalcularEdad(int year)
         {
             DateTime fechaActual = DateTime.Today;
@@ -60,7 +59,6 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
 
             return age;
         }
-
         // POST: NaturalPersons/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -70,17 +68,35 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
         {
             if (ModelState.IsValid)
             {
-                naturalPerson.Age = CalcularEdad(naturalPerson.BirthYear);
-                naturalPerson.CreatedDate= DateTime.Now;
-                _context.Add(naturalPerson);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                try
+                {
+                    naturalPerson.Id = Guid.NewGuid();
+                    naturalPerson.CreatedDate = DateTime.Now;
+                    naturalPerson.Age = CalcularEdad(naturalPerson.BirthYear);
+                    _context.Add(naturalPerson);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                        ModelState.AddModelError(string.Empty, "Ya existe una persona con el mismo documento");
+                    else
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
             }
+            
             return View(naturalPerson);
         }
 
         // GET: NaturalPersons/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.NaturalsPersons == null)
             {
@@ -100,7 +116,7 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, NaturalPerson naturalPerson)
+        public async Task<IActionResult> Edit(Guid id,NaturalPerson naturalPerson)
         {
             if (id != naturalPerson.Id)
             {
@@ -112,6 +128,7 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
                 try
                 {
                     naturalPerson.Age = CalcularEdad(naturalPerson.BirthYear);
+                    naturalPerson.ModifiedDate= DateTime.Now;
                     _context.Update(naturalPerson);
                     await _context.SaveChangesAsync();
                 }
@@ -132,7 +149,7 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
         }
 
         // GET: NaturalPersons/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.NaturalsPersons == null)
             {
@@ -152,7 +169,7 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
         // POST: NaturalPersons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             if (_context.NaturalsPersons == null)
             {
@@ -168,7 +185,7 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool NaturalPersonExists(int id)
+        private bool NaturalPersonExists(Guid id)
         {
           return (_context.NaturalsPersons?.Any(e => e.Id == id)).GetValueOrDefault();
         }

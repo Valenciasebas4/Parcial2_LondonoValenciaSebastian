@@ -13,8 +13,8 @@ namespace Parcial2_LondonoValenciaSebastian.Migrations
                 name: "NaturalsPersons",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Document = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     BirthYear = table.Column<int>(type: "int", nullable: false),
@@ -28,9 +28,9 @@ namespace Parcial2_LondonoValenciaSebastian.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_NaturalsPersons_Email",
+                name: "IX_NaturalsPersons_Document",
                 table: "NaturalsPersons",
-                column: "Email",
+                column: "Document",
                 unique: true);
         }
 

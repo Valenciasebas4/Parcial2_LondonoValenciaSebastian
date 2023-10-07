@@ -17,7 +17,7 @@ namespace Parcial2_LondonoValenciaSebastian.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<NaturalPerson>().HasIndex(s => s.Email).IsUnique();
+            modelBuilder.Entity<NaturalPerson>().HasIndex(s => s.Document).IsUnique();
 
 
         }

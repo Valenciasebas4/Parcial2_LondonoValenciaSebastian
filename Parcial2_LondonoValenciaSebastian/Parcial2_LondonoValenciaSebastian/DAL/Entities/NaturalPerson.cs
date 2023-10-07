@@ -10,6 +10,11 @@ namespace Parcial2_LondonoValenciaSebastian.DAL.Entities
 
         #region Properties
 
+        [Display(Name = "Documento")]
+        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string Document { get; set; }
+
 
         [Display(Name = "Nombre Completo")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres.")]

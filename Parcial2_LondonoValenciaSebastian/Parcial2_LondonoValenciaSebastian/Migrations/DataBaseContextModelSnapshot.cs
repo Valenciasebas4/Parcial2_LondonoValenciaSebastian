@@ -24,11 +24,9 @@ namespace Parcial2_LondonoValenciaSebastian.Migrations
 
             modelBuilder.Entity("Parcial2_LondonoValenciaSebastian.DAL.Entities.NaturalPerson", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -38,6 +36,11 @@ namespace Parcial2_LondonoValenciaSebastian.Migrations
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Document")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -54,7 +57,7 @@ namespace Parcial2_LondonoValenciaSebastian.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
+                    b.HasIndex("Document")
                         .IsUnique();
 
                     b.ToTable("NaturalsPersons");
