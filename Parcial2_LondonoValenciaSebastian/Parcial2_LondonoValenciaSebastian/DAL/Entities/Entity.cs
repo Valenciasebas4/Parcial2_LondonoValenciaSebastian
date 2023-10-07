@@ -5,7 +5,7 @@ namespace Parcial2_LondonoValenciaSebastian.DAL.Entities
 {
     public class Entity
     {
-        
+        [Key]
         public virtual int Id { get; set; }
 
         [Display(Name = "Fecha de creación")]

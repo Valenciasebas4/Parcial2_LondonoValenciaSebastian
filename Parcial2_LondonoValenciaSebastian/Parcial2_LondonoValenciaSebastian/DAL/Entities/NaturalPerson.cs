@@ -20,16 +20,14 @@ namespace Parcial2_LondonoValenciaSebastian.DAL.Entities
         [Display(Name = "Correo")]
         [MaxLength(50)]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Display(Name = "Año de Nacimiento")]
-        [MaxLength(4)]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public int BirthYear { get; set; }
 
         [Display(Name = "Edad")]
-        [MaxLength(100)]
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public int Age { get; set; }
 
 

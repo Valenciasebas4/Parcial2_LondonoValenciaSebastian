@@ -5,6 +5,9 @@ namespace Parcial2_LondonoValenciaSebastian.DAL
 {
     public class DataBaseContext : DbContext
     {
+        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
+        {
+        }
 
         #region Properties
         public DbSet<NaturalPerson> NaturalsPersons { get; set; }
@@ -14,7 +17,7 @@ namespace Parcial2_LondonoValenciaSebastian.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<NaturalPerson>().HasIndex(s => s.Id).IsUnique();
+            modelBuilder.Entity<NaturalPerson>().HasIndex(s => s.Email).IsUnique();
 
 
         }
