@@ -51,15 +51,27 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
             return View();
         }
 
+
+        private int CalcularEdad(int year)
+        {
+            DateTime fechaActual = DateTime.Today;
+
+            int age = fechaActual.Year - year;
+
+            return age;
+        }
+
         // POST: NaturalPersons/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FullName,Email,BirthYear,Age,Id,CreatedDate,ModifiedDate")] NaturalPerson naturalPerson)
+        public async Task<IActionResult> Create( NaturalPerson naturalPerson)
         {
             if (ModelState.IsValid)
             {
+                naturalPerson.Age = CalcularEdad(naturalPerson.BirthYear);
+                naturalPerson.CreatedDate= DateTime.Now;
                 _context.Add(naturalPerson);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -88,7 +100,7 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FullName,Email,BirthYear,Age,Id,CreatedDate,ModifiedDate")] NaturalPerson naturalPerson)
+        public async Task<IActionResult> Edit(int id, NaturalPerson naturalPerson)
         {
             if (id != naturalPerson.Id)
             {
@@ -99,6 +111,7 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
             {
                 try
                 {
+                    naturalPerson.Age = CalcularEdad(naturalPerson.BirthYear);
                     _context.Update(naturalPerson);
                     await _context.SaveChangesAsync();
                 }
