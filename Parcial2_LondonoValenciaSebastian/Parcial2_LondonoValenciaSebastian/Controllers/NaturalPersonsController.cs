@@ -127,7 +127,7 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
             {
                 try
                 {
-                    naturalPerson.Age = CalcularEdad(naturalPerson.BirthYear);
+                    naturalPerson.Age = CalculatAge(naturalPerson.BirthYear);
                     naturalPerson.ModifiedDate= DateTime.Now;
                     _context.Update(naturalPerson);
                     await _context.SaveChangesAsync();
