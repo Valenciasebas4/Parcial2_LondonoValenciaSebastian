@@ -73,7 +73,7 @@ namespace Parcial2_LondonoValenciaSebastian.Controllers
                 {
                     naturalPerson.Id = Guid.NewGuid();
                     naturalPerson.CreatedDate = DateTime.Now;
-                    naturalPerson.Age = CalculateAge(naturalPerson.BirthYear);
+                    naturalPerson.Age = CalculatAge(naturalPerson.BirthYear);
                     _context.Add(naturalPerson);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
